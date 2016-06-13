@@ -5,7 +5,7 @@
  *
  * Copyright (C) 2016 Intelligent Spark
  *
- * @package Isotope Shipping Zones Advanced
+ * @package Isotope Custom Step "Delivery Date"
  * @link       http://isotopeecommerce.org
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
@@ -23,6 +23,5 @@ if (class_exists('NamespaceClassLoader')) {
  */
 TemplateLoader::addFiles(array
 (
-    //'be_iso_integrity'                  => 'system/modules/isotope/templates/backend'
-
+    'iso_checkout_step_delivery_date'     => 'system/modules/isotope_checkout_step_delivery_date/templates/checkout'
 ));
