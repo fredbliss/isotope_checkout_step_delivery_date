@@ -1,12 +1,22 @@
 {
   "name": "intelligentspark/isotope_checkout_step_delivery_date",
-  "description": "Allows customer to specify a delivery date for perishable items.",
+  "description": "Allows customer to specify a delivery date for orders.",
+  "keywords": [
+    "contao",
+    "isotope",
+    "checkout",
+    "orders",
+    "step",
+    "date",
+    "delivery"
+  ],
   "type": "contao-module",
   "license": "LGPL-3.0+",
   "require": {
     "php": ">=5.3.2",
     "contao/core": ">=3.3.0,<4.0.0-dev",
     "contao-community-alliance/composer-plugin": "*",
+    "terminal42/contao-namespace-class-loader":"~1.0",
     "isotope/isotope-core": "~2.3"
   },
   "authors": [
@@ -14,5 +24,17 @@
       "name": "intelligentspark",
       "email": "fred.bliss@intelligentspark.com"
     }
-  ]
+  ],
+  "autoload": {
+    "psr-0": {
+      "IntelligentSpark\\": [
+        "library/"
+      ]
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "config": {
+    "preferred-install": "dist"
+  }
 }
