@@ -32,6 +32,13 @@
       ]
     }
   },
+  "extra": {
+    "contao": {
+      "sources": {
+        "": "system/modules/isotope_checkout_step_delivery_date"
+      }
+    }
+  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "config": {
