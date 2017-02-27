@@ -13,14 +13,13 @@
 namespace IntelligentSpark\CheckoutStep;
 
 use Isotope\CheckoutStep\CheckoutStep;
-use Isotope\Interfaces\IsotopeCheckoutStep;
 use Isotope\Interfaces\IsotopeProductCollection;
 use Isotope\Isotope;
 use Isotope\Template;
 
 
 
-class DeliveryDate extends CheckoutStep implements IsotopeCheckoutStep {
+class DeliveryDate extends CheckoutStep {
 
     protected $strTemplate = 'iso_checkout_delivery_date';
 
