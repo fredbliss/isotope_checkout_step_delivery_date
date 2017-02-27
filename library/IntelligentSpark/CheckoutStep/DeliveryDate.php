@@ -83,12 +83,14 @@ class DeliveryDate extends CheckoutStep implements IsotopeCheckoutStep {
     public function generate()
     {
         $objTemplate = new Template($this->strTemplate);
+        \System::loadLanguageFile($this->strTable);
 
-        $arrAttributes = ['dateDirection'=>'gtToday','inputType'=>'calendarfield','eval'=>['required'=>true,'rgxp'=>'date', 'datepicker'=>true]];
+        $arrAttributes = ['label'=>$GLOBALS['TL_LANG'][$this->strTable][$this->strField][0],'dateDirection'=>'gtToday','inputType'=>'calendarfield','dateImage'=>true,'dateIncludeCSS'=>true, 'dateIncludeCSSTheme'=>'ui-lightness','eval'=>['required'=>true,'rgxp'=>'date', 'datepicker'=>true]];
 
         $varValue = null;
 
-        $objWidget = new FormCalendarField(FormCalendarField::getAttributesFromDca($arrAttributes, $this->strField, $varValue, $this->strField, $this->strTable, $this));
+        //$objWidget = new FormCalendarField(FormCalendarField::getAttributesFromDca($arrAttributes, $this->strField, $varValue, $this->strField, $this->strTable));
+        $objWidget = new FormCalendarField($arrAttributes);
         $objWidget->storeValues = true;
 
         if (\Input::post('FORM_SUBMIT') == $this->strFormId)
