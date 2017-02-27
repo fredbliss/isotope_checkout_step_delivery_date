@@ -12,18 +12,19 @@
 
 namespace IntelligentSpark\CheckoutStep;
 
+use Isotope\Module\Checkout;
 use Isotope\CheckoutStep\CheckoutStep;
 use Isotope\Interfaces\IsotopeCheckoutStep;
 use Isotope\Interfaces\IsotopeProductCollection;
 use Isotope\Isotope;
 use Isotope\Template;
-use FormCalendarField;
+use Hofff\Contao\Calendarfield\FormCalendarField;
 
 
 
 class DeliveryDate extends CheckoutStep implements IsotopeCheckoutStep {
 
-    protected $strTemplate = 'iso_checkout_delivery_date';
+    protected $strTemplate = 'iso_checkout_step_delivery_date';
 
     protected $strFormId = 'iso_checkout_delivery_date';
 
@@ -41,9 +42,10 @@ class DeliveryDate extends CheckoutStep implements IsotopeCheckoutStep {
         
         $arrItems = $objOrder->getItems();
 
-        foreach($arrItems as $objProduct) {
+        foreach($arrItems as $objItem) {
+            $objProduct = $objItem->getProduct();
 
-            if($objProduct->type==4 || $objProduct->type==5 || $objProduct->delivery_date=='1') {
+            if($objProduct->getType()->id==4 || $objProduct->getType()->id==7 || $objProduct->delivery_date=='1') {
                 return true;
             }
         }
@@ -149,7 +151,7 @@ class DeliveryDate extends CheckoutStep implements IsotopeCheckoutStep {
      */
     public function review() {
 
-        System::loadLanguageFile($this->strTable);
+        \System::loadLanguageFile($this->strTable);
 
         $draftOrder = Isotope::getCart()->getDraftOrder();
 
