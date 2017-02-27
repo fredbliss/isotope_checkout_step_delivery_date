@@ -13,13 +13,14 @@
 namespace IntelligentSpark\CheckoutStep;
 
 use Isotope\CheckoutStep\CheckoutStep;
+use Isotope\Interfaces\IsotopeCheckoutStep;
 use Isotope\Interfaces\IsotopeProductCollection;
 use Isotope\Isotope;
 use Isotope\Template;
 
 
 
-class DeliveryDate extends CheckoutStep {
+class DeliveryDate extends CheckoutStep implements IsotopeCheckoutStep {
 
     protected $strTemplate = 'iso_checkout_delivery_date';
 
@@ -47,6 +48,29 @@ class DeliveryDate extends CheckoutStep {
         }
 
         return false;
+    }
+
+    public function isSkippable() {
+        return false;
+    }
+
+    /**
+     * Return true if the step has an error and forwarding should be cancelled
+     * @return  bool
+     */
+    public function hasError() {
+        return false;
+    }
+
+    /**
+     * Return short name of current class (e.g. for CSS)
+     * @return  string
+     */
+    public function getStepClass() {
+        $strClass = get_parent_class($this);
+        $strClass = substr($strClass, strrpos($strClass, '\\') + 1);
+
+        return parent::getStepClass() . ' ' . standardize($strClass);
     }
 
     /**
@@ -111,12 +135,30 @@ class DeliveryDate extends CheckoutStep {
             }
         }
 
-        $objTemplate->headline = $GLOBALS['TL_LANG'][$this->strTable]['date_picker'][0];
+        $objTemplate->headline = $GLOBALS['TL_LANG']['MSC']['delivery_date'];
         $objTemplate->datePicker = $objWidget->parse();
 
         return $objTemplate->parse();
     }
 
+
+    /**
+     * Get review information about this step
+     * @return  array
+     */
+    public function review() {
+
+        System::loadLanguageFile($this->strTable);
+
+        $draftOrder = Isotope::getCart()->getDraftOrder();
+
+        return array('delivery_date' => array
+        (
+            'headline' => $GLOBALS['TL_LANG']['tl_iso_product_collection']['delivery_date'][0],
+            'info'     => $draftOrder->{$this->strField},
+            'edit'     => Checkout::generateUrlForStep('review')
+        ));
+    }
     /**
      * Return array of tokens for notification
      * @param   IsotopeProductCollection
