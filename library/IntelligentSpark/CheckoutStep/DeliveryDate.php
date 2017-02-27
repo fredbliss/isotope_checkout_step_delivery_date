@@ -82,7 +82,7 @@ class DeliveryDate extends CheckoutStep implements IsotopeCheckoutStep {
     {
         $objTemplate = new Template($this->strTemplate);
 
-        $arrAttributes = ['dateDirection'=>'gtToday','inputType'=>'calendar','eval'=>['required'=>true,'rgxp'=>'date', 'datepicker'=>true]];
+        $arrAttributes = ['dateDirection'=>'gtToday','inputType'=>'calendarfield','eval'=>['required'=>true,'rgxp'=>'date', 'datepicker'=>true]];
 
         $varValue = null;
 
