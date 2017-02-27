@@ -12,14 +12,15 @@
 
 namespace IntelligentSpark\CheckoutStep;
 
-use Haste\Form\Form;
+use Isotope\CheckoutStep\CheckoutStep;
+use Isotope\Interfaces\IsotopeCheckoutStep;
 use Isotope\Interfaces\IsotopeProductCollection;
 use Isotope\Isotope;
 use Isotope\Template;
 
 
 
-class DeliveryDate extends CheckoutStep {
+class DeliveryDate extends CheckoutStep implements IsotopeCheckoutStep {
 
     protected $strTemplate = 'iso_checkout_delivery_date';
 
@@ -28,12 +29,6 @@ class DeliveryDate extends CheckoutStep {
     protected $strTable = 'tl_iso_product_collection';
     
     protected $strField = 'delivery_date';
-
-    /**
-     * Haste form
-     * @var \Haste\Form\Form
-     */
-    protected $objForm;
 
     /**
      * Returns true if order conditions are defined
@@ -61,7 +56,7 @@ class DeliveryDate extends CheckoutStep {
      */
     public function generate()
     {
-        $objTemplate = new \Isotope\Template($this->strTemplate);
+        $objTemplate = new Template($this->strTemplate);
 
         $arrAttributes = ['dateDirection'=>'gtToday','inputType'=>'calendar','eval'=>['required'=>true,'rgxp'=>'date', 'datepicker'=>true]];
 
