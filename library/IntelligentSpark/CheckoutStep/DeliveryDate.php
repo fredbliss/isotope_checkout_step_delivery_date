@@ -26,7 +26,7 @@ class DeliveryDate extends CheckoutStep implements IsotopeCheckoutStep {
 
     protected $strTemplate = 'iso_checkout_step_delivery_date';
 
-    protected $strFormId = 'iso_checkout_delivery_date';
+    //protected $strFormId = 'iso_checkout_delivery_date';
 
     protected $strTable = 'tl_iso_product_collection';
     
@@ -85,7 +85,7 @@ class DeliveryDate extends CheckoutStep implements IsotopeCheckoutStep {
         $objTemplate = new Template($this->strTemplate);
         \System::loadLanguageFile($this->strTable);
 
-        $arrAttributes = ['label'=>$GLOBALS['TL_LANG'][$this->strTable][$this->strField][0],'dateDirection'=>'gtToday','inputType'=>'calendarfield','dateImage'=>true,'dateIncludeCSS'=>true, 'dateIncludeCSSTheme'=>'ui-lightness','eval'=>['required'=>true,'rgxp'=>'date', 'datepicker'=>true]];
+        $arrAttributes = ['name'=>$this->strField,'id'=>$this->strField,'label'=>$GLOBALS['TL_LANG'][$this->strTable][$this->strField][0],'dateDirection'=>'gtToday','inputType'=>'calendarfield','dateImage'=>true,'dateIncludeCSS'=>true, 'dateIncludeCSSTheme'=>'ui-lightness','eval'=>['mandatory'=>true,'rgxp'=>'date', 'datepicker'=>true]];
 
         $varValue = null;
 
@@ -93,7 +93,7 @@ class DeliveryDate extends CheckoutStep implements IsotopeCheckoutStep {
         $objWidget = new FormCalendarField($arrAttributes);
         $objWidget->storeValues = true;
 
-        if (\Input::post('FORM_SUBMIT') == $this->strFormId)
+        if (\Input::post('FORM_SUBMIT') == 'iso_mod_checkout_review')
         {
             $objWidget->validate();
             $varValue = $objWidget->value;
@@ -101,7 +101,7 @@ class DeliveryDate extends CheckoutStep implements IsotopeCheckoutStep {
             $rgxp = $arrAttributes['eval']['rgxp'];
 
             // Convert date formats into timestamps (check the eval setting first -> #3063)
-            if ($varValue != '' && in_array($rgxp, array('date', 'time', 'datim')))
+            /*if ($varValue != '' && in_array($rgxp, array('date', 'time', 'datim')))
             {
                 try
                 {
@@ -112,7 +112,7 @@ class DeliveryDate extends CheckoutStep implements IsotopeCheckoutStep {
                 {
                     $objWidget->addError(sprintf($GLOBALS['TL_LANG']['ERR']['invalidDate'], $varValue));
                 }
-            }
+            }*/
 
             // Do not submit the field if there are errors
             if ($objWidget->hasErrors())
@@ -121,8 +121,6 @@ class DeliveryDate extends CheckoutStep implements IsotopeCheckoutStep {
             }
             elseif ($objWidget->submitInput())
             {
-                $objOrder = Isotope::getCart()->getDraftOrder();
-                
                 // Store the form data
                 $_SESSION['FORM_DATA'][$this->strField] = $varValue;
 
@@ -132,11 +130,7 @@ class DeliveryDate extends CheckoutStep implements IsotopeCheckoutStep {
                     $varValue = $objWidget->getEmptyValue();
                 }
 
-                // Set the new value
-                if ($varValue !== $objOrder->{$this->strField})
-                {
-                    $objOrder->{$this->strField};
-                }
+                Isotope::getCart()->{$this->strField} = $varValue;
             }
         }
 
@@ -153,16 +147,7 @@ class DeliveryDate extends CheckoutStep implements IsotopeCheckoutStep {
      */
     public function review() {
 
-        \System::loadLanguageFile($this->strTable);
-
-        $draftOrder = Isotope::getCart()->getDraftOrder();
-
-        return array('delivery_date' => array
-        (
-            'headline' => $GLOBALS['TL_LANG']['tl_iso_product_collection']['delivery_date'][0],
-            'info'     => $draftOrder->{$this->strField},
-            'edit'     => Checkout::generateUrlForStep('review')
-        ));
+        return array();
     }
     /**
      * Return array of tokens for notification

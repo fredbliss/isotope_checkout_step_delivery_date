@@ -11,3 +11,4 @@
  */
 
 
+$GLOBALS['ISO_HOOKS']['preCheckout'][] = ['IntelligentSpark\Hooks\DeliveryDate','preCheckout'];
