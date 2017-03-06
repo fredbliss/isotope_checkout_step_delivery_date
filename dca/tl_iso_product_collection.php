@@ -10,7 +10,6 @@
 /**
  * Table tl_iso_payment_modules
  */
-$GLOBALS['TL_DCA']['tl_iso_product_collection']['palettes']['default'] = str_replace(',date_shipped;', ',date_shipped,delivery_date,', $GLOBALS['TL_DCA']['tl_iso_product_collection']['palettes']['default']);
 
 $GLOBALS['TL_DCA']['tl_iso_product_collection']['fields']['delivery_date'] = array
 (
