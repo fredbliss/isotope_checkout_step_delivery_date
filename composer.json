@@ -29,14 +29,14 @@
   "autoload": {
     "psr-0": {
       "IntelligentSpark\\": [
-        "library/"
+        "system/modules/isotope_checkout_step_delivery_date/library/"
       ]
     }
   },
   "extra": {
     "contao": {
       "sources": {
-        "system/modules/isotope_checkout_step_delivery_date": "system/modules/isotope_checkout_step_delivery_date"
+        "": "system/modules/isotope_checkout_step_delivery_date"
       }
     }
   },
