@@ -92,6 +92,7 @@ class DeliveryDate extends CheckoutStep implements IsotopeCheckoutStep {
         //$objWidget = new FormCalendarField(FormCalendarField::getAttributesFromDca($arrAttributes, $this->strField, $varValue, $this->strField, $this->strTable));
         $objWidget = new FormCalendarField($arrAttributes);
         $objWidget->storeValues = true;
+        $objWidget->mandatory = true;
 
         if (\Input::post('FORM_SUBMIT') == 'iso_mod_checkout_review')
         {
